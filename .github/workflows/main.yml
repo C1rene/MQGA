@@ -87,11 +87,7 @@ jobs:
 
       - name: Get LSPatch version | 获取LSPatch版本
         id: LSPatch
-        uses: pozetroninc/github-action-get-latest-release@v0.8.0
-        with:
-          repository: ${{ ENV.LSPATCH_REPO }}
-          excludes: prerelease, draft
-          token: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "release=canary-492" >> "$GITHUB_OUTPUT"
 
       - name: Get QQ Version | 获取 QQ 版本
         id: get_qq_version
@@ -197,10 +193,11 @@ jobs:
       - name: Download LSPatch | 下载 LSPatch
         run: |
           if [ "${{ env.LSPATCH_REPO }}" = "JingMatrix/LSPatch" ]; then
-            gh release download -O LSPatch.jar --repo "JingMatrix/LSPatch" --pattern '*-release.jar'
+            gh release download canary-492 -O LSPatch.jar --repo "JingMatrix/LSPatch" --pattern '*-release.jar'
           else
             gh release download -O LSPatch.jar --repo "${{ env.LSPATCH_REPO }}" --pattern '*.jar'
           fi
+
 
       - name: Download Preset Modules | 下载预设模块
         run: |
